@@ -3,6 +3,7 @@
 </head>
 
 <body>
+  {{> login}}
   {{> hello}}
 </body>
 
@@ -11,3 +12,11 @@
   {{greeting}}
   <input type="button" value="Click" />
 </template>
+
+<template name="login">
+	<p>Sign up or in!</p>
+	<div style='float: right'>
+		{{loginButtons align="right"}}
+	</div>
+</template>
+
