@@ -30,6 +30,14 @@ Template.details.canRemove = function () {
   return this.owner === Meteor.userId();
 };
 
+Template.page.events({
+	'click input.create': function (event, template) {
+		if (! Meteor.userId())
+			return;
+		openCreateDialog();
+	}
+});
+
 // Create an item
 var openCreateDialog = function () {
   Session.set("createError", null);
