@@ -1,0 +1,114 @@
+<head>
+  <title>The most stupefying items on the planet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  {{> page}}
+</body>
+
+<template name="page">
+  {{#if showCreateDialog}}
+    {{> createDialog}}
+  {{/if}}
+
+  <div class="container">
+    <div class="row">
+      <div class="span1"> </div>
+
+      <div class="span10">
+        <div class="header row">
+          <div class="span5">
+            <h3 style="margin-bottom: 0px">Stupefying Items</h3>
+          </div>
+          <div class="span5">
+            <div style="float: right">
+              {{loginButtons align="right"}}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span6">
+            {{#if currentUser}}
+            <div class="pagination-centered">
+              <em><small>Double click the map to post a item!</small></em>
+            </div>
+            {{/if}}
+          </div>
+		  {{#if anyItems}}
+          <div class="span4">
+            {{> details}}
+		  </div>
+		  {{/if}}
+        </div>
+      </div>
+
+      <div class="span1"> </div>
+    </div>
+  </div>
+</template>
+
+<template name="details">
+  <div class="details">
+    {{#if item}}
+      {{#with item}}
+        <h1>{{title}}</h1>
+
+		<div class="description">
+		  <p>{{description}}</p>
+          <p><small>Posted by {{creatorName}}</small></p>
+        </div>
+
+        {{#if canRemove}}
+          <div class="alert alert-info"><small>
+              You posted this item and nobody likes it, so if
+              you like, you could
+              <b><a href="#" class="remove">delete this listing</a></b>.
+          </small></div>
+        {{/if}}
+      {{/with}}
+    {{else}}
+      <h1 class="muted pagination-centered">
+        {{#if anyItems}}
+          Click an Item to select it
+        {{else}}
+          Sign in and add your own Stupefying Items
+        {{/if}}
+      </h1>
+    {{/if}}
+  </div>
+</template>
+
+<template name="createDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Add Item</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <label>Title</label>
+      <input type="text" class="title span5">
+
+      <label>Description</label>
+      <textarea class="description span5"></textarea>
+
+      <label class="checkbox">
+        <input type="checkbox" class="publish">
+        Publish item right away
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add item</a>
+    </div>
+  </div>
+</template>
+
