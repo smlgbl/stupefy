@@ -1,5 +1,5 @@
 <head>
-  <title>The most stupefying items on the planet</title>
+  <title>STUPEFY</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -8,76 +8,57 @@
 </body>
 
 <template name="page">
-  {{#if showCreateDialog}}
-    {{> createDialog}}
-  {{/if}}
+{{#if showCreateDialog}}
+{{> createDialog}}
+{{/if}}
 
-  <div class="container">
-    <div class="row">
-      <div class="span1"> </div>
-
-      <div class="span10">
-        <div class="header row">
-          <div class="span5">
-            <h3 style="margin-bottom: 0px">Stupefying Items</h3>
-          </div>
-          <div class="span5">
-            <div style="float: right">
-              {{loginButtons align="right"}}
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="span6">
-            {{#if currentUser}}
-            <div class="pagination-centered">
-				<input type="button" class="create" value="New Item" />
-            </div>
-            {{/if}}
-          </div>
-		  {{#if anyItems}}
-          <div class="span4">
-            {{> details}}
-		  </div>
-		  {{/if}}
-        </div>
-      </div>
-
-      <div class="span1"> </div>
-    </div>
-  </div>
+<div class="container">
+	<div class="header row">
+		<div class="span7">
+			<h3 style="margin-bottom: 0px">The most Stupefying Items on the Planet.</h3>
+		</div>
+		<div class="span3">
+			<div style="float: right">
+				{{loginButtons align="right"}}
+			</div>
+		</div>
+	</div>
+	<div class="body row">
+		<div class="span3">
+			{{#if currentUser}}
+			<div style="float: left">
+				<input type="button" class="create" value="+" />
+			</div>
+			{{/if}}
+		</div>
+		{{#if anyItems}}
+		<div class="span7">
+			<div class="itemList">
+				{{#each items}}
+				{{> details}}
+				{{/each}}
+			</div>
+		</div>
+		{{/if}}
+	</div>
+</div>
 </template>
 
 <template name="details">
-  <div class="details">
-    {{#if item}}
-      {{#with item}}
-        <h1>{{title}}</h1>
+<div class="details">
+	<h1>{{title}}</h1>
 
-		<div class="description">
-		  <p>{{description}}</p>
-          <p><small>Posted by {{creatorName}}</small></p>
-        </div>
+	<div class="description">
+		<p>{{description}}</p>
+		<p><small>Posted by {{creatorName}}</small></p>
+	</div>
 
-        {{#if canRemove}}
-          <div class="alert alert-info"><small>
-              You posted this item and nobody likes it, so if
-              you like, you could
-              <b><a href="#" class="remove">delete this listing</a></b>.
-          </small></div>
-        {{/if}}
-      {{/with}}
-    {{else}}
-      <h1 class="muted pagination-centered">
-        {{#if anyItems}}
-          Click an Item to select it
-        {{else}}
-          Sign in and add your own Stupefying Items
-        {{/if}}
-      </h1>
-    {{/if}}
-  </div>
+	{{#if canRemove}}
+	<div class="alert alert-info"><small>
+			<b><a href="#" class="remove">&times;</a></b>.
+	</small></div>
+	{{/if}}
+</div>
 </template>
 
 <template name="createDialog">

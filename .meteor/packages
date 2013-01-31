@@ -11,6 +11,6 @@ accounts-google
 accounts-password
 email
 force-ssl
-handlebars
 less
 accounts-ui
+bootstrap

@@ -11,11 +11,22 @@ Meteor.startup(function () {
   });
 });
 
-Template.details.item = function () {
-  return Items.findOne(Session.get("selected"));
+Template.page.item = function () {
+  return Items.findOne();
 };
 
-Template.details.anyItems = function () {
+Template.page.myItems = function () {
+  return Items.find({ owner: Meteor.userId() });
+};
+
+Template.page.items = function () {
+  if( Meteor.userId() ) {
+	  return Items.find( { $or: [ { owner: Meteor.userId() }, { published: true } ] } );
+  }
+  return Items.find( { published: true } );
+};
+
+Template.page.anyItems = function () {
   return Items.find().count() > 0;
 };
 
@@ -30,8 +41,12 @@ Template.details.canRemove = function () {
   return this.owner === Meteor.userId();
 };
 
+Template.details.remove = function () {
+  return Items.remove( Meteor.userId(), this.item );
+};
+
 Template.page.events({
-	'click input.create': function (event, template) {
+	'click input.create': function () {
 		if (! Meteor.userId())
 			return;
 		openCreateDialog();

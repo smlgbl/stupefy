@@ -49,7 +49,7 @@ Meteor.methods({
       throw new Meteor.Error(400, "Required parameter missing");
     if (options.title.length > 100)
       throw new Meteor.Error(413, "Title too long");
-    if (options.tags.length > 100)
+    if (options.tags && options.tags.length > 100)
       throw new Meteor.Error(413, "Too many tags");
     if (options.description.length > 1000)
       throw new Meteor.Error(413, "Description too long");
@@ -60,10 +60,7 @@ Meteor.methods({
       owner: this.userId,
       title: options.title,
       description: options.description,
-      published: !! options.published,
-      comments: [],
-	  links: [],
-	  tags: []
+      published: !! options.published
     });
   }
 
