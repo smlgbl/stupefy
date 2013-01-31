@@ -3,11 +3,6 @@ Meteor.subscribe("items");
 
 Meteor.startup(function () {
   Meteor.autorun(function () {
-    if (! Session.get("selected")) {
-      var item = Items.findOne();
-      if (item)
-        Session.set("selected", item._id);
-    }
   });
 });
 
@@ -20,15 +15,23 @@ Template.page.myItems = function () {
 };
 
 Template.page.items = function () {
-  if( Meteor.userId() ) {
-	  return Items.find( { $or: [ { owner: Meteor.userId() }, { published: true } ] } );
-  }
-  return Items.find( { published: true } );
+	if( Meteor.userId() ) {
+		return Items.find( { $or: [ { owner: Meteor.userId() }, { published: true } ] } );
+	}
+	return Items.find( { published: true } );
 };
 
 Template.page.anyItems = function () {
   return Items.find().count() > 0;
 };
+
+Template.page.events({
+	'click input.create': function () {
+		if (! Meteor.userId())
+			return;
+		openCreateDialog();
+	}
+});
 
 Template.details.creatorName = function () {
   var owner = Meteor.users.findOne(this.owner);
@@ -37,19 +40,36 @@ Template.details.creatorName = function () {
   return displayName(owner);
 };
 
-Template.details.canRemove = function () {
+Template.details.selected = function () {
+	return this._id === Session.get("selected");
+};
+
+Template.details.events({
+	'click .details': function () {
+		if( Session.get("selected") === this._id ) {
+			Session.set("selected", null );
+		}
+		Session.set("selected", this._id);
+	},
+	'dblclick .details': function () {
+		if( this.owner === Meteor.userId() ) {
+			Session.set("editing", this._id);
+		}
+		Session.set("selected", this._id);
+	}
+});
+
+Template.selectedDetails.canRemove = function () {
   return this.owner === Meteor.userId();
 };
 
-Template.details.remove = function () {
-  return Items.remove( Meteor.userId(), this.item );
-};
-
-Template.page.events({
-	'click input.create': function () {
-		if (! Meteor.userId())
-			return;
-		openCreateDialog();
+Template.selectedDetails.events({
+	'click .remove': function () {
+		Items.remove( this._id );
+		return false;
+	},
+	'click .description': function () {
+		Session.set("selected", null );
 	}
 });
 

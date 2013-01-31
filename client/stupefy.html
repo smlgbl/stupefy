@@ -36,6 +36,7 @@
 			<div class="itemList">
 				{{#each items}}
 				{{> details}}
+				<div class="spacer"> </div>
 				{{/each}}
 			</div>
 		</div>
@@ -46,17 +47,22 @@
 
 <template name="details">
 <div class="details">
-	<h1>{{title}}</h1>
+	<h5>{{title}}</h5>
+	<p><small>by {{creatorName}}</small></p>
+	{{#if selected}}
+	{{> selectedDetails}}
+	{{/if}}
+</div>
+</template>
 
-	<div class="description">
-		<p>{{description}}</p>
-		<p><small>Posted by {{creatorName}}</small></p>
-	</div>
-
+<template name="selectedDetails">
+<div class="description">
+	<p>{{description}}
+	</p>
 	{{#if canRemove}}
-	<div class="alert alert-info"><small>
-			<b><a href="#" class="remove">&times;</a></b>.
-	</small></div>
+	<small>
+		<b><a href="#" class="remove">Remove</a></b>
+	</small>
 	{{/if}}
 </div>
 </template>
