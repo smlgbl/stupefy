@@ -2,8 +2,8 @@ Meteor.subscribe("directory");
 Meteor.subscribe("items");
 
 Meteor.startup(function () {
-  Meteor.autorun(function () {
-  });
+	filepicker.setKey( "AVd4ChttS62tAUWB3J6zQz" );
+	filepicker.constructWidget( document.getElementById('attachment'));
 });
 
 Template.page.item = function () {
@@ -121,6 +121,10 @@ Template.createDialog.events({
     }
   },
 
+  'change #attachment': function (e) {
+	  console.log( e.files );
+  },
+
   'click .cancel': function () {
     Session.set("showCreateDialog", false);
   }
@@ -145,9 +149,11 @@ Template.changeDialog.events({
     var title = template.find(".title").value;
     var description = template.find(".description").value;
     var published = template.find(".publish").checked;
+	var id = template.find(".itemID").value;
 
     if (title.length && description.length) {
       Meteor.call('changeItem', {
+		id: id,
         title: title,
         description: description,
         published: published
