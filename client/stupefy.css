@@ -3,10 +3,6 @@
     padding: 20px 0;
 }
 
-.details {
-    margin-top: -18px;
-}
-
 .mask {
     position: absolute;
     width: 100%;
@@ -16,10 +12,6 @@
     background-color: #000000;
     opacity: .4;
     z-index: 1;
-}
-
-.description {
-    margin: 20px 0 20px 0;
 }
 
 input.chosen {
@@ -32,4 +24,20 @@ input.chosen {
     background-color: white;
     padding: 3px;
     padding-bottom: 0;
+}
+
+.spacer {
+	padding: 5px;
+}
+
+.subheading {
+	padding-top: -50;
+}
+
+.itemtitle {
+}
+
+.details {
+	border-style: solid;
+	border-width: thin;
 }

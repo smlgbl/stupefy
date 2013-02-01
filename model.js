@@ -21,7 +21,7 @@ Items.allow({
       if (userId !== item.owner)
         return false; // not the owner
 
-      var allowed = ["title", "description"];
+      var allowed = ["title", "description", "published"];
       if (_.difference(fields, allowed).length)
         return false; // tried to write to forbidden field
 
@@ -62,6 +62,27 @@ Meteor.methods({
       description: options.description,
       published: !! options.published
     });
+  },
+  changeItem: function (id, options) {
+    options = options || {};
+    if (! (typeof options.title === "string" && options.title.length &&
+           typeof options.description === "string" &&
+           options.description.length ))
+      throw new Meteor.Error(400, "Required parameter missing");
+    if (options.title.length > 100)
+      throw new Meteor.Error(413, "Title too long");
+    if (options.tags && options.tags.length > 100)
+      throw new Meteor.Error(413, "Too many tags");
+    if (options.description.length > 1000)
+      throw new Meteor.Error(413, "Description too long");
+    if (! this.userId)
+      throw new Meteor.Error(403, "You must be logged in");
+
+    return Items.update({ _id: id },{ $set: {
+      title: options.title,
+      description: options.description,
+      published: !! options.published
+    }});
   }
 
 });

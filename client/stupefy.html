@@ -11,6 +11,9 @@
 {{#if showCreateDialog}}
 {{> createDialog}}
 {{/if}}
+{{#if showChangeDialog}}
+{{> changeDialog}}
+{{/if}}
 
 <div class="container">
 	<div class="header row">
@@ -47,21 +50,31 @@
 
 <template name="details">
 <div class="details">
-	<h5>{{title}}</h5>
-	<p><small>by {{creatorName}}</small></p>
+	<p>
+	<div class="itemtitle">{{title}}</div>
+	<div class="subheading">
+		<small>by {{creatorName}}</small>
+	</div>
 	{{#if selected}}
 	{{> selectedDetails}}
 	{{/if}}
+	</p>
 </div>
 </template>
 
 <template name="selectedDetails">
-<div class="description">
-	<p>{{description}}
-	</p>
+<div class="selectedDetails">
+	<div class="description">
+		{{description}}
+	</div>
 	{{#if canRemove}}
 	<small>
 		<b><a href="#" class="remove">Remove</a></b>
+	</small>
+	{{/if}}
+	{{#if notPublished}}
+	<small>
+		<b><a href="#" class="publish">Publish</a></b>
 	</small>
 	{{/if}}
 </div>
@@ -87,7 +100,7 @@
       <textarea class="description span5"></textarea>
 
       <label class="checkbox">
-        <input type="checkbox" class="publish">
+        <input type="checkbox" class="publish" name="published">
         Publish item right away
       </label>
     </div>
@@ -95,6 +108,38 @@
     <div class="modal-footer">
       <a href="#" class="btn cancel">Cancel</a>
       <a href="#" class="btn btn-primary save">Add item</a>
+    </div>
+  </div>
+</template>
+
+<template name="changeDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Change Item</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <label>Title</label>
+	  <input type="text" class="title span5" value="{{item.title}}">
+
+      <label>Description</label>
+	  <textarea class="description span5">{{item.description}}</textarea>
+
+      <label class="checkbox">
+		  <input type="checkbox" class="publish" name="published" {{#if item.published}}checked="checked"{{/if}}>
+        Publish item right away
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Save changes</a>
     </div>
   </div>
 </template>
