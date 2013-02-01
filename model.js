@@ -63,9 +63,9 @@ Meteor.methods({
       published: !! options.published
     });
   },
-  changeItem: function (id, options) {
+  changeItem: function (options) {
     options = options || {};
-    if (! (typeof options.title === "string" && options.title.length &&
+    if (! (options.id && typeof options.title === "string" && options.title.length &&
            typeof options.description === "string" &&
            options.description.length ))
       throw new Meteor.Error(400, "Required parameter missing");
@@ -78,7 +78,7 @@ Meteor.methods({
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in");
 
-    return Items.update({ _id: id },{ $set: {
+    return Items.update({ _id: options.id },{ $set: {
       title: options.title,
       description: options.description,
       published: !! options.published

@@ -99,6 +99,9 @@
       <label>Description</label>
       <textarea class="description span5"></textarea>
 
+      <label>Add File</label>
+	  <input type="filepicker" id="attachment" class="filepicker">
+
       <label class="checkbox">
         <input type="checkbox" class="publish" name="published">
         Publish item right away
@@ -127,17 +130,18 @@
 
       <label>Title</label>
 	  <input type="text" class="title span5" value="{{item.title}}">
-	  <input type="hidden" class="hidden itemID" value={{item._id}}>
 
       <label>Description</label>
 	  <textarea class="description span5">{{item.description}}</textarea>
 
+      <label>Added File</label>
 	  <input type="filepicker" id="attachment" class="filepicker">
 
       <label class="checkbox">
 		  <input type="checkbox" class="publish" name="published" {{#if item.published}}checked="checked"{{/if}}>
         Publish item right away
       </label>
+	  <input type="hidden" class="hidden itemID" value={{item._id}}>
     </div>
 
     <div class="modal-footer">
