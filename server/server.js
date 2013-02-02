@@ -5,5 +5,7 @@ Meteor.publish("directory", function () {
 
 Meteor.publish("items", function () {
   return Items.find(
-    {$or: [{"published": true}, {owner: this.userId}]});
+    {$or: [{"published": true}, {owner: this.userId}]},
+	{sort: {dateModified: -1}, limit: 10 }
+	);
 });

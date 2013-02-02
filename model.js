@@ -60,7 +60,9 @@ Meteor.methods({
       owner: this.userId,
       title: options.title,
       description: options.description,
-      published: !! options.published
+      published: !! options.published,
+	  dateCreated: new Date(),
+	  dateModified: new Date()
     });
   },
   changeItem: function (options) {
@@ -81,7 +83,8 @@ Meteor.methods({
     return Items.update({ _id: options.id },{ $set: {
       title: options.title,
       description: options.description,
-      published: !! options.published
+      published: !! options.published,
+	  dateModified: new Date()
     }});
   }
 
